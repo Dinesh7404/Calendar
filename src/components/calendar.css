@@ -1,0 +1,1454 @@
+.calendar-app-bg {
+  font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+  color: #3c4043;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-app-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #22223b;
+  margin: 2rem 0 1.5rem 0;
+  letter-spacing: 0.05em;
+}
+
+/* Header styles */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #dadce0;
+  background-color: #fff;
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+
+.calendar-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.calendar-logo {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.calendar-icon {
+  font-size: 24px;
+  margin-right: 8px;
+  color: #4285f4;
+}
+
+.calendar-title-text {
+  font-size: 22px;
+  font-weight: 400;
+  color: #5f6368;
+}
+
+.calendar-today-btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  border: 1px solid #dadce0;
+  background-color: #fff;
+  color: #3c4043;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 16px;
+}
+
+.calendar-today-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.calendar-title {
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0;
+  margin-right: 20px; /* Add spacing after year display */
+}
+
+/* View options - match the screenshot style */
+.calendar-view-options {
+  display: flex;
+  border-radius: 4px;
+  margin-right: 16px;
+  overflow: hidden;
+  border: 1px solid #dadce0;
+}
+
+.view-option-btn {
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.view-option-btn.active {
+  background-color: #e8eaed;
+  color: #1a73e8;
+}
+
+/* Main grid layout */
+.calendar-main-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  width: 900px;
+  max-width: 98vw;
+  justify-content: center;
+  align-items: flex-start;
+}
+.calendar-main-grid-mobile {
+  flex-direction: column !important;
+  width: 98vw !important;
+  gap: 1.5rem !important;
+  align-items: center !important;
+}
+.calendar-panel, .event-panel {
+  min-width: 0;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+}
+.calendar-panel {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.10);
+  padding: 2rem 2rem 3.5rem 2rem;
+  min-width: 340px;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1 1 0%;
+}
+
+/* Year view - updated to match provided reference image */
+.year-view {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns layout */
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.month-card {
+  width: 100%;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Month card header */
+.month-card-header {
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dadce0;
+  text-align: center;
+  font-weight: 500;
+  color: #3c4043;
+  font-size: 14px;
+}
+
+.month-card-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 4px;
+}
+
+.month-day-header {
+  font-size: 11px;
+  color: #70757a;
+  text-align: center;
+  padding: 4px 0;
+  font-weight: 500;
+}
+
+.month-day-header:first-child {
+  color: #e67c73; /* Sunday in red */
+}
+
+.month-cell {
+  height: 28px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #3c4043;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.month-cell:hover {
+  background-color: #f1f3f4;
+}
+
+.month-cell.outside-month {
+  color: #bdc1c6;
+}
+
+.month-cell.today {
+  background-color: #1a73e8;
+  color: white;
+  font-weight: 500;
+}
+
+/* Make the days of the week in each month more compact and aligned */
+.month-card-grid .month-day-header {
+  text-align: center;
+  padding: 2px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+/* Sidebar styling */
+.calendar-sidebar {
+  width: 256px;
+  min-width: 256px; /* Ensure sidebar maintains width */
+  background-color: #fff;
+  border-right: 1px solid #dadce0;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 10;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  position: sticky;
+  top: 64px; /* Stick below header */
+}
+
+/* Create button styled like Google's */
+.create-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 32px);
+  margin: 8px 16px;
+  height: 48px;
+  background-color: #fff;
+  border-radius: 24px;
+  border: 1px solid #dadce0;
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.10);
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c4043;
+}
+
+.create-button:hover {
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.4);
+  background-color: #f8f9fa;
+}
+
+.create-button svg {
+  margin-right: 12px;
+  fill: #5f6368;
+}
+
+/* Add spacing between create button and mini calendar */
+.create-button-wrapper {
+  margin-bottom: 20px;
+  padding: 16px 16px 0;
+}
+
+.mini-calendar {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Adjust spacing for calendar categories */
+.calendar-categories {
+  margin-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+}
+
+/* Mini calendar - match Google's clean design */
+.mini-calendar {
+  padding: 16px;
+  border-bottom: 1px solid #dadce0;
+}
+
+.mini-month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.mini-month-nav span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c4043;
+}
+
+.mini-nav-btn {
+  background: none;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5f6368;
+}
+
+.mini-nav-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.mini-calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.mini-calendar-day-header {
+  font-size: 11px;
+  color: #70757a;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.mini-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.mini-calendar-day {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  margin: 1px auto;
+}
+
+.mini-calendar-day:hover {
+  background-color: #f1f3f4;
+}
+
+.mini-calendar-day.today {
+  background-color: #1a73e8;
+  color: white;
+  font-weight: 500;
+}
+
+.mini-calendar-day.selected {
+  background-color: #d2e3fc;
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.mini-calendar-day.outside-month {
+  color: #80868b;
+}
+
+/* Google Calendar day view styling */
+
+/* Day view container */
+.day-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Day header with date circle */
+.day-header {
+  padding: 16px;
+  border-bottom: 1px solid #dadce0;
+  display: flex;
+  align-items: center;
+  background: #fff;
+}
+
+.day-date-display {
+  display: flex;
+  align-items: center;
+}
+
+/* Style the blue circle with date */
+.day-date-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: #1a73e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 16px;
+}
+
+.day-name {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.day-number {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.day-full-date {
+  font-size: 16px;
+  color: #3c4043;
+}
+
+/* Day timeline container */
+.day-body {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.day-timeline {
+  display: flex;
+  min-height: 1440px; /* 24 hours */
+}
+
+/* Time scale styling */
+.time-scale {
+  width: 60px;
+  border-right: 1px solid #dadce0;
+  flex-shrink: 0;
+}
+
+.time-slot {
+  height: 60px;
+  position: relative;
+  border-bottom: 1px solid #dadce0;
+}
+
+.time-label {
+  position: absolute;
+  top: -9px;
+  right: 8px;
+  font-size: 10px;
+  color: #70757a;
+}
+
+/* Day events grid */
+.day-events-grid {
+  flex: 1;
+  position: relative;
+  min-width: 600px;
+}
+
+.hour-slot {
+  height: 60px;
+  border-bottom: 1px solid #e1e1e1;
+  position: relative;
+}
+
+.hour-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e1e1e1;
+  top: 0;
+}
+
+/* Current time indicator - update to match Google's red style */
+.current-time-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  z-index: 6;
+  pointer-events: none;
+  transition: top 0.3s linear; /* Smoother animation */
+}
+
+.time-indicator-circle {
+  width: 12px;
+  height: 12px;
+  background-color: #ea4335; /* Google Calendar's red color */
+  border-radius: 50%;
+  margin-left: -6px; /* Center the circle on the line */
+  box-shadow: 0 0 2px rgba(0,0,0,0.2); /* Add subtle shadow for depth */
+}
+
+.time-indicator-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #ea4335; /* Google Calendar's red color */
+}
+
+/* Event add modal */
+.event-add-modal {
+  position: absolute;
+  bottom: 5rem;
+  left: 2rem;
+  right: 2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  z-index: 20;
+}
+.event-add-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.event-add-fields input,
+.event-add-fields select {
+  padding: 0.8rem;
+  border: 1px solid #e0e1e7;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+.event-add-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f3f4;
+  background-color: white;
+}
+.event-add-btn {
+  flex: 1;
+  padding: 0.8rem;
+  background: #00b4d8;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.event-cancel-btn {
+  flex: 1;
+  padding: 0.8rem;
+  background: #f0f0f0;
+  color: #22223b;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/* Fix the layout overlapping issue */
+
+/* Main container layout */
+.google-calendar-style {
+  font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+  color: #3c4043;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Updated header styles to ensure proper positioning */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #dadce0;
+  background-color: #fff;
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+
+/* Enhanced navigation buttons styling */
+.calendar-nav-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.calendar-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5f6368;
+  transition: background-color 0.2s ease;
+  padding: 0;
+}
+
+.calendar-nav-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.calendar-nav-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.nav-chevron {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 0;
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Main content wrapper layout fix */
+.google-calendar-main {
+  display: flex;
+  height: calc(100vh - 64px); /* Account for header height */
+  margin-top: 64px; /* Push content below fixed header */
+  overflow: hidden;
+}
+
+/* Fixed sidebar position and dimensions */
+.calendar-sidebar {
+  width: 256px;
+  min-width: 256px; /* Ensure sidebar maintains width */
+  background-color: #fff;
+  border-right: 1px solid #dadce0;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 10;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  position: sticky;
+  top: 64px; /* Stick below header */
+}
+
+/* Adjust main content wrapper to not overlap */
+.calendar-content-wrapper {
+  flex: 1; /* Take remaining space */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 10px; /* Add some spacing from sidebar */
+  box-sizing: border-box;
+}
+
+/* Make sure the content fills available space */
+.calendar-content {
+  min-height: 100%;
+  width: 100%;
+}
+
+/* Year view grid layout fix */
+.year-view {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns layout */
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Month cards in year view fix */
+.month-card {
+  width: 100%;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Responsive design improvements */
+@media (max-width: 1024px) {
+  .calendar-sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-sidebar {
+    position: fixed;
+    left: -100%;
+    width: 250px;
+    height: calc(100vh - 64px);
+    transition: left 0.3s ease;
+  }
+  
+  .calendar-sidebar.visible {
+    left: 0;
+  }
+  
+  .calendar-content-wrapper {
+    margin-left: 0;
+    padding-left: 0;
+    width: 100%;
+  }
+  
+  /* Add mobile menu toggle button */
+  .sidebar-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #1a73e8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 30;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+/* Week view styling to match Google Calendar */
+
+/* Week header styling */
+.week-header {
+  display: grid;
+  grid-template-columns: 50px repeat(7, 1fr);
+  height: 70px;
+  border-bottom: 1px solid #dadce0;
+  background-color: #fff;
+  position: sticky;
+  top: 15px; /* Reduced from 20px to position header even higher */
+  z-index: 5;
+  margin-top: 0;
+  padding-top: 8px;
+}
+
+/* Week day styling - make sure it's prominent */
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+}
+
+.week-day-name {
+  font-size: 11px;
+  color: #70757a;
+  text-transform: uppercase;
+  letter-spacing: 0.25px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.week-day-number {
+  font-size: 26px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.today-circle {
+  background-color: #1a73e8;
+  color: white;
+}
+
+/* Week body styling */
+.week-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.week-body {
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.week-timeline {
+  display: flex;
+  position: relative;
+  min-height: 1440px; /* 24 hours * 60 minutes */
+}
+
+/* Time scale on left side */
+.time-scale {
+  width: 50px;
+  flex-shrink: 0;
+  border-right: 1px solid #dadce0;
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background-color: white;
+}
+
+.time-scale-header {
+  height: 70px; /* Match week header height */
+  border-bottom: 1px solid #dadce0;
+  position: relative;
+}
+
+.timezone-label {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  font-size: 10px;
+  color: #70757a;
+}
+
+.time-slot {
+  height: 60px;
+  position: relative;
+  border-bottom: 1px solid #dadce0;
+}
+
+.time-label {
+  font-size: 10px;
+  color: #70757a;
+  position: absolute;
+  right: 8px;
+  top: -9px;
+}
+
+/* Week grid */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  flex-grow: 1;
+  position: relative;
+  min-width: 700px;
+}
+
+.week-day-column {
+  position: relative;
+  border-right: 1px solid #dadce0;
+  min-height: 1440px;
+}
+
+.week-day-column:last-child {
+  border-right: none;
+}
+
+.week-day-column-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Highlight today column */
+.today-column .week-day-column-fill {
+  background-color: rgba(26, 115, 232, 0.04);
+}
+
+/* Hour lines */
+.hour-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #dadce0;
+  transform: translateY(60px);
+}
+
+/* Events in week view */
+.timeline-event {
+  position: absolute;
+  width: calc(100% - 10px);
+  left: 5px;
+  padding: 4px 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  color: #3c4043;
+  font-size: 12px;
+  z-index: 5;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.event-green {
+  background-color: #0f9d58;
+  color: white;
+  border-left: none;
+}
+
+.event-blue {
+  background-color: #4285f4;
+  color: white;
+  border-left: none;
+}
+
+.event-pink {
+  background-color: #e8453c;
+  color: white;
+  border-left: none;
+}
+
+.event-yellow {
+  background-color: #f4b400;
+  color: white;
+  border-left: none;
+}
+
+/* Month view styles to match Google Calendar */
+
+.month-view {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Month header row */
+.month-day-header-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  background-color: #fff;
+  border-bottom: 1px solid #dadce0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 8px 0;
+}
+
+.month-day-name {
+  color: #70757a;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 8px 0;
+}
+
+/* Month grid layout */
+.month-grid {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.month-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid #dadce0;
+  min-height: 100px;
+  flex-grow: 1;
+}
+
+/* Month cell styling */
+.month-cell-wrapper {
+  border-right: 1px solid #dadce0;
+  padding: 6px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.month-cell-wrapper:nth-child(7n) {
+  border-right: none;
+}
+
+.month-cell-wrapper.outside-month {
+  background-color: #f8f9fa;
+}
+
+/* Date number styling */
+.month-cell-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 2px 0 6px;
+  align-self: flex-start;
+}
+
+.month-date-label {
+  font-size: 12px;
+  color: #3c4043;
+  font-weight: 500;
+}
+
+/* Today's date highlight */
+.month-cell-date.today-cell {
+  background-color: #1a73e8;
+  color: white;
+  border-radius: 50%;
+}
+
+.month-cell-date.today-cell .month-date-label {
+  color: white;
+}
+
+/* Selected date styling */
+.month-cell-date.selected-cell {
+  background-color: rgba(26, 115, 232, 0.2);
+  border-radius: 50%;
+}
+
+/* Events container in month cell */
+.month-cell-events {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+/* Month event styling */
+.month-event {
+  padding: 0;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  height: 22px;
+  line-height: 22px;
+  padding-left: 4px;
+}
+
+/* Event color styles */
+.month-event.event-blue {
+  background-color: #4285f4;
+  color: white;
+}
+
+.month-event.event-pink {
+  background-color: #e8453c;
+  color: white;
+}
+
+.month-event.event-yellow {
+  background-color: #f4b400;
+  color: white;
+}
+
+.month-event.event-green {
+  background-color: #0f9d58;
+  color: white;
+}
+
+/* More events indicator */
+.more-events {
+  color: #5f6368;
+  font-size: 12px;
+  padding-left: 4px;
+  cursor: pointer;
+}
+
+/* Current day highlight */
+.current-day-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(66, 133, 244, 0.04);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Calendar categories and dropdown styling */
+.category-section {
+  padding: 0 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.category-header:hover {
+  background-color: #f1f3f4;
+}
+
+.category-header span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c4043;
+}
+
+.category-toggle-btn {
+  background: none;
+  border: none;
+  color: #5f6368;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.category-toggle-btn:hover {
+  background-color: #e8eaed;
+}
+
+.category-toggle-btn.closed {
+  transform: rotate(-90deg);
+}
+
+.category-list {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  padding-left: 8px;
+}
+
+.category-list.expanded {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 4px;
+}
+
+.category-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 2px;
+}
+
+.category-item:hover {
+  background-color: #f1f3f4;
+}
+
+.category-checkbox {
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-checkbox input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.category-checkbox label {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.category-label {
+  font-size: 14px;
+  color: #3c4043;
+  cursor: pointer;
+}
+
+/* Color-specific checkbox styles */
+.blue-checkbox label {
+  background-color: #4285f4;
+}
+
+.pink-checkbox label {
+  background-color: #e8453c;
+}
+
+.yellow-checkbox label {
+  background-color: #f4b400;
+}
+
+.green-checkbox label {
+  background-color: #0f9d58;
+}
+
+/* Make event modal more compact */
+.compact-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  max-width: 90vw;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  z-index: 1500;
+}
+
+.event-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.event-header h4 {
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #3c4043;
+  text-align: center;
+}
+
+.event-close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #5f6368;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Time picker styling */
+.time-picker-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.time-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 320px;
+  background-color: white;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.time-picker-container {
+  display: flex;
+  height: 240px;
+  padding: 0;
+}
+
+.time-picker-column {
+  flex: 1;
+  border-right: 1px solid #dadce0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-picker-column:last-child {
+  border-right: none;
+}
+
+.time-picker-header {
+  text-align: center;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5f6368;
+  border-bottom: 1px solid #dadce0;
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.time-picker-options {
+  overflow-y: auto;
+  height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #dadce0 transparent;
+}
+
+.time-picker-option {
+  padding: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #3c4043;
+  width: 100%;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.time-picker-option:hover {
+  background-color: #f1f3f4;
+}
+
+.time-picker-option.selected {
+  background-color: #e8f0fe;
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+/* Centered save button with white container */
+.event-add-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f3f4;
+  background-color: white;
+}
+
+.event-save-btn {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 120px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  margin: 0 auto; /* Center the button */
+}
+
+.event-save-btn:hover {
+  background-color: #1967d2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Mini calendar styles - add Sunday highlighting */
+.mini-calendar-day.sunday {
+  color: #e67c73; /* Google Calendar's red color for Sundays */
+}
+
+.mini-calendar-day.sunday.outside-month {
+  color: rgba(230, 124, 115, 0.5); /* Lighter red for outside month Sundays */
+}
+
+.mini-calendar-day.sunday:hover {
+  background-color: rgba(230, 124, 115, 0.1); /* Lighter red hover effect */
+}
+
+.mini-calendar-day.sunday.today {
+  background-color: #e67c73; /* Use red background for today if it's Sunday */
+  color: white;
+}
+
+.mini-calendar-day-header:first-child {
+  color: #e67c73; /* Make the "S" header for Sunday red too */
+}
+
+/* Add Header styles - improve spacing */
+.live-date-display {
+  font-size: 14px;
+  color: #5f6368;
+  white-space: nowrap;
+  position: relative;
+  padding-left: 16px; /* Add left padding */
+}
+
+/* Add a subtle separator between year and date */
+.live-date-display::before {
+  content: "";
+  height: 24px;
+  width: 1px;
+  background-color: #dadce0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Event notification styling */
+.event-added-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #323232;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transform: translateY(100px);
+  opacity: 0;
+  /* Make transitions faster for quick appearance/disappearance */
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  font-size: 14px;
+  max-width: 400px;
+  border-left: 4px solid #1a73e8;
+  font-weight: 500;
+}
+
+.event-added-notification.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
